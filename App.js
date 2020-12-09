@@ -14,6 +14,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="mainScreen" component={mainScreen} />
         <Stack.Screen name="reservaCitaScreen" component={reservaCitaScreen} />
         <Stack.Screen name="listaCitaPendiente" component={listaCitaPendiente} />
         <Stack.Screen name="detalleCitaPendienteScreen" component={detalleCitaPendienteScreen} />

@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import { Button, View, Text, StyleSheet, ActivityIndicator, TextInput, TouchableOpacity, Alert, _ScrollView } from 'react-native';
 import firebase from '../db/firebase';
 import {ListItem} from 'react-native-elements';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const detalleCitaPendienteScreen = (props) => {
 

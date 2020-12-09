@@ -10,15 +10,13 @@ const listaCitaPendiente = () =>{
         firebase.DB.collection('citas').onSnapshot(querySnapshot =>{
             const citas = [];
             querySnapshot.docs.forEach(docs => {
-                const {nombre, apellido, num_cedula, num_celular, especialidad, fecha} = docs.data()
+                const {nombre, apellido, num_cedula, num_celular,} = docs.data()
                 citas.push({
                     id: docs.id,
                     nombre,
                     apellido,
                     num_cedula,
                     num_celular,
-                    especialidad,
-                    fecha
                 })
             });
             setCitas(citas)  

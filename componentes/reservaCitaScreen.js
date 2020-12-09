@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import {View, TextInput, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
-import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
+import {View, TextInput, StyleSheet, TouchableOpacity, ScrollView, Text} from 'react-native'
 import firebase from '../db/firebase'
 
 const reservaCitaScreen = (props) => {
@@ -10,8 +9,6 @@ const reservaCitaScreen = (props) => {
     apellido:"",
     num_cedula:"",
     num_celular:"",
-    especialidad:"",
-    fecha:"",
 }
 
 const [state, setState]= useState(estadoInicial);
@@ -31,8 +28,6 @@ const [state, setState]= useState(estadoInicial);
               apellido: state.apellido,
               num_cedula: state.num_cedula,
               num_celular: state.num_celular,
-              especialidad: state.especialidad,
-              fecha: state.fecha,
           });
           props.navigation.navigate('listaCitaPendiente')
           }catch(error){
@@ -42,48 +37,38 @@ const [state, setState]= useState(estadoInicial);
     };
     
     return (
-      <ScrollView>
+      <ScrollView style={styles.container}>
             <View style={styles.container}>  
               <Text style={styles.titulo}> Reservación de cita médica</Text>
-              <View/> 
-              
-              <View style={styles.container}></View>       
+                 
               <Text style = { styles.textLabel}> Nombre </Text>
               <TextInput style = { styles.input} 
               placeholder = "Ingrese su nombre"  
               placeholderTextColor="#F0EAD6"
-              onChangeText={(value) => actualizarChangeText("nombre", value)}
+              onChangeText={(value) => actualizarChangeText(value, "nombre")}
               ></TextInput>
-              </View>
-
-            <View style={styles.container}>
+              
               <Text style = { styles.textLabel}> Apellidos </Text>
               <TextInput style = { styles.input} 
               placeholder = "Ingrese sus apellidos" 
               placeholderTextColor="#F0EAD6"
-              onChangeText={(value) => actualizarChangeText("apellido", value)}
+              onChangeText={(value) => actualizarChangeText(value, "apellido")}
               ></TextInput>
-              </View>
-
-            <View style={styles.container}>
+              
               <Text style = { styles.textLabel}> Número de cédula </Text>
               <TextInput style = { styles.input} 
               placeholder = "Ingrese su número de cédula" 
               placeholderTextColor="#F0EAD6"
-              onChangeText={(value) => actualizarChangeText("num_cedula", value)}
+              onChangeText={(value) => actualizarChangeText(value, "num_cedula")}
               ></TextInput>
-              </View>
-
-             <View style={styles.container}>
+              
               <Text style = { styles.textLabel}> Número telefónico </Text>
               <TextInput style = { styles.input} 
               placeholder = "Ingrese su número celular" 
               placeholderTextColor="#F0EAD6"
-              onChangeText={(value) => actualizarChangeText("num_celular", value)}
+              onChangeText={(value) => actualizarChangeText(value, "num_celular")}
               ></TextInput>
-             </View>
              
-             <View style={styles.container}>
               <TouchableOpacity
                onPress={() => registrarNuevaCita()}
               style={ styles.button }>
