@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { Button, View, Text, StyleSheet, ActivityIndicator, TextInput, TouchableOpacity, Alert, _ScrollView } from 'react-native';
-import firebase from '../db/firebase';
-import {ListItem} from 'react-native-elements';
+import {View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Alert, _ScrollView } from 'react-native';
+import { TextInput } from "react-native-gesture-handler";
+import firebase from "../db/firebase";
 
 const detalleCitaPendienteScreen = (props) => {
 
     const estadoInicial={
+        id: "",
         nombre:"",
         apellido:"",
         num_cedula:"",
@@ -16,38 +17,44 @@ const detalleCitaPendienteScreen = (props) => {
 
     const [cita, setCita]= useState(estadoInicial);
 
-    const getCitaById = async (id) =>{
-        const dbRef = firebase.DB.collection('citas').doc(id)
+    const getCitaById = async (id) => {
+        const dbRef = firebase.DB.collection("citas").doc(id)
         const doc = await dbRef.get();
         const cita = doc.data();
-        setCita({...cita, Id: doc.id});
+        setCita({...cita, id: doc.id});
         setCargando(false);
-    }
+    };
 
-useEffect(() =>{
+useEffect(() => {
     getCitaById(props.route.params.citaId)
 }, []);
 
-const actualizarChangeText = (nombre, value) =>{
-    setCita({...cita, [nombre]: value});
+const actualizarChangeText = (value, prop) =>{
+    setCita({...cita, [prop]: value});
 };
 
 const confirmacionAlert = () => {
     Alert.alert('Elminar Reservación', '¿Estás seguro?',[
         {text: 'Eliminar', onPress: () => deleteCitaById()},
-        {text: 'Cancelar', onPress: () => console.log(false)},
-    ])
-}
+        {text: 'Cancelar', onPress: () => console.log("Cancelado")},
+    ],
+    {
+        cancelable: true,
+    }
+  );
+};
 
-const deleteCitaById = async (id) =>{
-    const dbRef = firebase.DB.collection('citas').doc(props.route.params.citaId);
+const deleteCitaById = async () => {
+    setCargando(true);
+    const dbRef = firebase.DB.collection("citas").doc(props.route.params.citaId);
     await dbRef.delete();
-    props.navigation.navigate('listaCitaPendiente')
+    setCargando(false);
+    props.navigation.navigate("listaCitaPendiente");
 }
 
-const updateCitaById = async (id) =>{
-    const dbRef = firebase.DB.collection('citas').doc(cita.id);
-    await dbRef.set({
+const updateCitaById = async () => {
+    const citaRef = firebase.DB.collection("citas").doc(cita.id);
+    await citaRef.set({
         nombre: cita.nombre,
         apellido: cita.apellido,
         num_cedula: cita.num_cedula,
@@ -56,10 +63,10 @@ const updateCitaById = async (id) =>{
         fecha: cita.fecha,
     });
     setCita(estadoInicial)
-    props.navigation.navigate('listaCitaPendiente')
-}
+    props.navigation.navigate("listaCitaPendiente");
+};
 
-const [cargando, setCargando] = useState(true)
+const [cargando, setCargando] = useState(true);
 
 if (cargando){
     return(
@@ -78,7 +85,7 @@ return(
     placeholder = "Ingrese su nombre"  
     placeholderTextColor="#F0EAD6"
     value={cita.nombre}
-    onChangeText={(value) => actualizarChangeText("nombre", value)}
+    onChangeText={(value) => actualizarChangeText(value, "nombre")}
     ></TextInput>
 
     <Text style = { styles.textLabel}> Apellidos </Text>
@@ -86,7 +93,7 @@ return(
     placeholder = "Ingrese sus apellidos" 
     placeholderTextColor="#F0EAD6"
     value={cita.apellido}
-    onChangeText={(value) => actualizarChangeText("apellido", value)}
+    onChangeText={(value) => actualizarChangeText(value, "apellido")}
     ></TextInput>
 
     <Text style = { styles.textLabel}> Número de cédula </Text>
@@ -94,20 +101,32 @@ return(
     placeholder = "Ingrese su número de cédula" 
     placeholderTextColor="#F0EAD6"
     value={cita.num_cedula}
-    onChangeText={(value) => actualizarChangeText("num_cedula", value)}
+    onChangeText={(value) => actualizarChangeText(value, "num_cedula")}
     ></TextInput>
     
-    <Text style = { styles.textLabel}> Número telefónico </Text>
+    <Text style = { styles.textLabel}> Número celular </Text>
     <TextInput style = { styles.input} 
     placeholder = "Ingrese su número celular" 
     placeholderTextColor="#F0EAD6"
     value={cita.num_celular}
-    onChangeText={(value) => actualizarChangeText("num_celular", value)}
+    onChangeText={(value) => actualizarChangeText(value, "num_celular")}
     ></TextInput>
-   
+    
     <Text style = { styles.textLabel}> Especialidad </Text>
-
+    <TextInput style = { styles.input} 
+    placeholder = "Ingrese la especialidad" 
+    placeholderTextColor="#F0EAD6"
+    value={cita.especialidad}
+    onChangeText={(value) => actualizarChangeText(value, "especialidad")}
+    ></TextInput> 
+    
     <Text style = { styles.textLabel}> Fecha </Text>
+    <TextInput style = { styles.input} 
+    placeholder = "Ingrese la fecha de la cita" 
+    placeholderTextColor="#F0EAD6"
+    value={cita.fecha}
+    onChangeText={(value) => actualizarChangeText(value, "fecha")}
+    ></TextInput>
    
     <TouchableOpacity
      onPress={() => updateCitaById()}

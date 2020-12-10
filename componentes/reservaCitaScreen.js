@@ -9,6 +9,8 @@ const reservaCitaScreen = (props) => {
     apellido:"",
     num_cedula:"",
     num_celular:"",
+    especialidad:"",
+    fecha:"",
 }
 
 const [state, setState]= useState(estadoInicial);
@@ -28,6 +30,8 @@ const [state, setState]= useState(estadoInicial);
               apellido: state.apellido,
               num_cedula: state.num_cedula,
               num_celular: state.num_celular,
+              especialidad: state.especialidad,
+              fecha: state.fecha,
           });
           props.navigation.navigate('listaCitaPendiente')
           }catch(error){
@@ -38,9 +42,7 @@ const [state, setState]= useState(estadoInicial);
     
     return (
       <ScrollView style={styles.container}>
-            <View style={styles.container}>  
-              <Text style={styles.titulo}> Reservación de cita médica</Text>
-                 
+            <View style={styles.container}>      
               <Text style = { styles.textLabel}> Nombre </Text>
               <TextInput style = { styles.input} 
               placeholder = "Ingrese su nombre"  
@@ -67,6 +69,20 @@ const [state, setState]= useState(estadoInicial);
               placeholder = "Ingrese su número celular" 
               placeholderTextColor="#F0EAD6"
               onChangeText={(value) => actualizarChangeText(value, "num_celular")}
+              ></TextInput>
+
+              <Text style = { styles.textLabel}> Especialidad</Text>
+              <TextInput style = { styles.input} 
+              placeholder = "Ingrese la especialidad" 
+              placeholderTextColor="#F0EAD6"
+              onChangeText={(value) => actualizarChangeText(value, "especialidad")}
+              ></TextInput>
+
+              <Text style = { styles.textLabel}> Fecha </Text>
+              <TextInput style = { styles.input} 
+              placeholder = "Ingrese la fecha de la cita" 
+              placeholderTextColor="#F0EAD6"
+              onChangeText={(value) => actualizarChangeText(value, "fecha")}
               ></TextInput>
              
               <TouchableOpacity

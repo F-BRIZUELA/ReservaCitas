@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Button, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 const mainScreen = (props) => {
     return (
@@ -14,16 +14,11 @@ const mainScreen = (props) => {
             </TouchableOpacity>   
             
             <TouchableOpacity
-            onPress={() => navigation.navigate('listaCitaPendiente')}
+            onPress={() => props.navigation.navigate('listaCitaPendiente')}
               style={ styles.buttonMain }>
               <Text style={ styles.textButtonMain }> Citas pendientes </Text>
             </TouchableOpacity>
-
-            <TouchableOpacity
-            onPress={() => navigation.navigate('historialcita')}
-              style={ styles.buttonMain }>
-              <Text style={ styles.textButtonMain }> Historial de citas </Text>
-            </TouchableOpacity>   
+ 
             </View>
       );
 }
@@ -64,7 +59,7 @@ const styles = StyleSheet.create({
 
     buttonMain: {
       textAlign:'center',
-      marginTop: '10%',
+      marginTop: '16%',
       backgroundColor: '#AD1517',
       marginHorizontal:'12%',
       borderRadius: 5,
